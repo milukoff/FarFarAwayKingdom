@@ -1,0 +1,6 @@
+<EmulatorCasketWish>
+  <URLAdress>expedient.ru</URLAdress>
+  <ApiMetod>GetStatus</ApiMetod>
+  <ApiExtension>json</ApiExtension>
+  <Debug>1</Debug>
+</EmulatorCasketWish>

@@ -1,0 +1,97 @@
+﻿@model FarFarAway.Models.Edit.EditStatusViewModel
+
+@{
+    ViewBag.Title = "Установка статуса";
+}
+<script>
+    $(document).ready(function () {
+        var status = $('#Status');
+        var Date = $('#Date');
+        function enable(i) {
+            if (i != null) {
+                var id = i.attr('id');
+                if (id != null) {
+                    var grId = '#' + id + 'Group';
+                    var group = $(grId);
+
+                    i.removeAttr('disabled');
+                    i.show();
+
+                    if (group != null) {
+                        group.show();
+                    }
+
+                }
+            }
+        };
+
+        function disable(i) {
+            if (i != null) {
+                var id = i.attr('id');
+                if (id != null) {
+                    var grId = '#' + id + 'Group';
+                    var group = $(grId);
+                    i.attr('disabled', 'true');
+                    i.hide();
+                    if (group != null) {
+                        group.hide();
+                    }
+
+                }
+            }
+        };
+        status.change(function (e) {
+            var t = status.val();
+            if (t == 3)
+            {
+                enable(Date);
+            }
+            else
+            {
+                disable(Date);
+            }
+        });
+        status.trigger('change');
+    });
+</script>
+
+<h2>Установка статуса</h2>
+
+@using (Html.BeginForm("Index", "AdminStatus", FormMethod.Post, new { id = "editForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Сервис "Ларец"</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Status, ViewBag.StatusList as IEnumerable<SelectListItem>)
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="DateGroup" hidden="hidden">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date)
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<button id="employeeChoice" type="button" class="btn btn-primary" onclick="history.back()">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    <span>Назад</span>
+</button>

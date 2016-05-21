@@ -1,0 +1,27 @@
+﻿@model FarFarAway.Models.View.StatusViewModel
+@{
+    ViewBag.Title = "Домашняя страница";
+}
+@if (Model != null && !string.IsNullOrEmpty(Model.StatusName))
+{
+    <div class="form-horizontal">
+        <h2>Сервис "Ларец"</h2>
+        <h4>Текущий статус</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.StatusName)
+            </div>
+        </div>
+        @if (Model.Status==3)
+        { 
+            <div class="form-group" id="DateGroup">
+                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Date)
+                </div>
+            </div>
+        }
+    </div>
+}

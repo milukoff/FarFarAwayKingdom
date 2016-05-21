@@ -1,0 +1,48 @@
+﻿@model DateTime?
+@{
+    IDictionary<string, object> htmlAttributes;
+    object objAttributes;
+    if (ViewData.TryGetValue("htmlAttributes", out objAttributes))
+    {
+        htmlAttributes = objAttributes as IDictionary<string, object> ?? HtmlHelper.AnonymousObjectToHtmlAttributes(objAttributes);
+    }
+    else
+    {
+        htmlAttributes = new RouteValueDictionary();
+    }
+    htmlAttributes.Add("type", "date");
+    htmlAttributes.Add("class", "date-picker");
+
+    String format = (Request.UserAgent != null && Request.UserAgent.Contains("Chrome")) ? "{0:yyyy-MM-dd}" : "{0:d}";
+    String datepickerformat = (Request.UserAgent != null && Request.UserAgent.Contains("Chrome")) ? "yy-mm-dd" : "dd.mm.yy";
+    htmlAttributes.Add("alt", datepickerformat);
+
+    @Html.TextBox("", Model, format, htmlAttributes)
+    <script type="text/javascript">
+                        alt = $('.date-picker').attr('alt');
+                        var widget = $(".date-picker").datepicker({
+                            closeText: 'Закрыть',
+                            prevText: '&#x3C;Пред',
+                            nextText: 'След&#x3E;',
+                            currentText: 'Сегодня',
+                            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                            monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                            'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                            dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+                            dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+                            dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                            weekHeader: 'Нед',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            dateFormat: alt,
+                            showOtherMonths: false,
+                            autoSize: true,
+                            gotoCurrent: true,
+                            showOptions: { direction: "down" }
+                        });
+    </script>
+}
+
